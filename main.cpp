@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -86,10 +87,55 @@ class Member : public Person {
 };
 
 
-
+class Library {
+    private: 
+        vector<Book> books;
+        vector<Member> members;
+    public:
+        void addBook(const Book& book) {
+            books.push_back(book);
+            cout << "Book added to library: " << book.getTitle() << endl;
+        }
+        void removeBook(const string& title) {
+            for (auto it = books.begin(); it != books.end(); ++it) {
+                if (it->getTitle() == title) {
+                    books.erase(it);
+                    cout << "Book removed from the library: " << title << endl;
+                } 
+            }
+            cout << "Book not found!" << endl;
+        }
+        void addMember(const Member& member) {
+            members.push_back(member);
+            cout << "Member added: " << member.getName() << endl;
+        }
+        void issueBook(const string& title, Member& member) {
+            for (auto &book : books) {
+                if(book.getTitle() == title && book.isAvailable()) {
+                    member.borrowBook(book);
+                    return;
+                }
+            }
+            cout << "Book not available or not found" << endl;
+        }
+        void returnBook (const string& title, Member& member) {
+            for (auto &book : books) {
+                if (book.getTitle() == title) {
+                    member.returnBook(book);
+                    return;
+                }
+            }
+            cout << "book does not exist in the library" << endl;
+        }
+        void displayBooks() const {
+            cout << "Books in the library: " << endl;
+            for (const auto &book : books) {
+                book.getDetails();
+            }
+        }
+};
 
 
 int main() {
-
     return 0;
 }
