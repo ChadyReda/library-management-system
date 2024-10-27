@@ -8,8 +8,9 @@ class Book {
     private:
         string title;
         string author;
-        bool available;
+        bool available = true;
     public:
+        Book(string title, string author): title(title), author(author) {}
         string getTitle() const {
             return title;
         }
@@ -77,8 +78,9 @@ class Member : public Person {
             if (book.isAvailable()) {
                 cout << name << " borrowed the book : " << book.getTitle() << endl;
                 book.setAvailability(false);
+            }else {
+                cout << "Book is currently unavailable!" << endl;
             }     
-            cout << "Book is currently unavailable!" << endl;
         }
         void returnBook(Book& book) {
             book.setAvailability(true);
@@ -137,5 +139,19 @@ class Library {
 
 
 int main() {
+    Library library;
+    Book book1("moqadimat ibn khaldoun", "ibn khaldoun");
+    Book book2("C++ programing language", "bjarne stroustrup");
+
+    Admin admin("Mohamed", 101);
+    Member member1("Ahmed", 102);
+
+    library.addBook(book1);
+    library.addBook(book2);
+    library.displayBooks();
+    library.addMember(member1);
+    library.issueBook("C++ programing language", member1);
+    library.issueBook("C++ programing language", member1);
+    library.returnBook("C++ programing language", member1);
     return 0;
 }
